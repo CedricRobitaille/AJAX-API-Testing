@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0, 100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
 
 * {
   box-sizing: border-box;
@@ -17,7 +17,7 @@
   --glow-strong: rgba(255, 127, 125, 0.5);
 
   --poke-red: #ff5350;
-  --poke-red-dark: #cf2e2c;
+  --poke-red-dark: #9e1e1c;
 
 
   --fire: #fe944b;
@@ -30,7 +30,7 @@
   --dark: #4e4b4b;
   --steel: #adb1b4;
   --psychic: #c38ac5;
-  --poison: #9778ca;
+  --poison: #af92df;
   --normal: #c5c5c5;
   --ice: #b6e3e9;
   --ghost: #7a8bb9;
@@ -44,17 +44,18 @@ html {
   background-color: var(--bg);
   color: var(--black);
 
-  font-family: "Roboto", sans-serif;
+  font-family: "Lexend", sans-serif;
   font-optical-sizing: auto;
   font-weight: <weight>;
   font-style: normal;
-  font-variation-settings: "wdth" 100;
 }
 
 body {
   max-width: 82rem;
   margin-left: auto;
   margin-right: auto;
+
+  position: relative;
 
   padding: 1.5rem 1.5rem;
 
@@ -87,6 +88,50 @@ article {
   gap: 2rem;
   width:
 }
+
+.error {
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, 0);
+  top: 100dvh;
+  width:fit-content;
+  padding: 1rem 2rem;
+  background-color: rgba(255, 244, 244, 0.75);
+  border: 2px solid var(--poke-red);
+  color: var(--poke-red-dark);
+  font-weight: 700;
+  border-radius: 12px;
+
+  backdrop-filter: blur(4px);
+  box-shadow: 0 0 16px -2px rgba(255,255,255,.25);
+
+  animation: error-slide;
+  animation-duration: 7.5s;
+  opacity: 0;
+}
+
+@keyframes error-slide {
+  0% {
+    top: 100dvh;
+    opacity: 0;
+  }
+
+  10% {
+  top: calc(100dvh - 6rem);
+  opacity: 1;
+  }
+
+  90% {
+    top: calc(100dvh - 6rem);
+    opacity: 1;
+  }
+
+  100% {
+    top: calc(100dvh - 10rem);
+    opacity: 0;
+  }
+}
+
 
 
 /* ---------- NAVIGATION ---------- */
@@ -196,6 +241,7 @@ input[type="search"]::-webkit-search-results-decoration {
   -webkit-appearance: none;
   height: 1.5rem;
   width: 1.5rem;
+  top: -.125rem;
   background-image: url("../images/icon_close.svg");
   cursor: pointer;
 }
