@@ -8,7 +8,10 @@ let limit = 18;
 let isLoading = false;
 
 
-
+/**
+ * Reports an error to the user
+ * @param {string} error - Error message (MUST HAVE ERROR CODE)
+ */
 const errorNotification = (error) => {
   console.log(error)
   if (/404/.test(error)) {
@@ -29,14 +32,63 @@ const errorNotification = (error) => {
 
 
 
+const pokemonInfoCard = async (data) => {
+  
+  data = await data;
+  console.log(data)
+
+  const assembleInfoCard = () => {
+    const infoCard = document.createElement("section");
+    infoCard.id = "info-panel"
+
+    const sprite = document.createElement("img");
+    sprite.setAttribute("src", data.sprites.front_default)
+    sprite.id = "sprite";
+    infoCard.appendChild(sprite);
+
+    const id = document.createElement('p');
+    id.classList.add("id-number");
+    id.innerText = data.order;
+    infoCard.appendChild(id);
+
+    const name = document.createElement("h2")
+    name.id = "pokemon-name";
+    name.innerText = data.name;
+    infoCard.appendChild(name);
 
 
+
+    return infoCard;
+  }
+
+  const main = document.querySelector("main");
+  const infoPanel = assembleInfoCard()
+  
+
+  const previousPanel = document.getElementById("info-panel");
+  if (previousPanel) {
+    main.removeChild(previousPanel);
+  }
+
+  main.appendChild(infoPanel)
+  isLoading = false;
+}
+
+
+
+
+
+
+
+/**
+ * Wipes the search results, returns an empty state.
+ */
 const clearCards = () => {
   offset = 0;
+  limit = 18;
   const resultContainer = document.getElementById("search-results");
   resultContainer.innerHTML = ""
 }
-
 
 
 
@@ -122,8 +174,10 @@ const displayData = async (data) => {
     card.appendChild(typeContainer)
 
 
-    card.addEventListener("click", () => {
-
+    card.addEventListener("click", (event) => {
+      if (!isLoading) {
+        pokemonInfoCard(fetchData(`pokemon/${event.currentTarget.id}`));
+      }
     })
 
 
@@ -142,6 +196,7 @@ const displayData = async (data) => {
     const nextPlaceholder = document.querySelector(".placeholder");
     resultContainer.insertBefore(card, nextPlaceholder);
   }
+  
   limit = 6;
   isLoading = false;
 }
@@ -191,7 +246,9 @@ const search = async () => {
 
   } else {
     console.log("No Value Detected")
-    window.onload = displayData(fetchData("pokemon"));
+    clearCards();
+    displayData(fetchData("pokemon"));
+    
   }
 
 }
@@ -215,7 +272,7 @@ window.addEventListener("scroll", () => {
       displayData(fetchData("pokemon"));
     }
   }
-
+  
 
 });
 
