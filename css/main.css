@@ -20,16 +20,16 @@
   --poke-red-dark: #9e1e1c;
 
 
-  --fire: #fe944b;
-  --water: #5b9be4;
+  --fire: #ff9d5c;
+  --water: #71acf0;
   --grass: #95e468;
   --electric: #ebc071;
-  --ground: #a38b5d;
-  --rock: #a7968f;
+  --ground: #978d6c;
+  --rock: #998f8b;
   --fighting: #bb7e6f;
   --dark: #4e4b4b;
   --steel: #adb1b4;
-  --psychic: #c38ac5;
+  --psychic: #db96d0;
   --poison: #af92df;
   --normal: #c5c5c5;
   --ice: #b6e3e9;
@@ -51,7 +51,7 @@ html {
 }
 
 body {
-  max-width: 82rem;
+  max-width: 84rem;
   margin-left: auto;
   margin-right: auto;
 
@@ -86,7 +86,7 @@ article {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  width:
+  width: 100%;
 }
 
 .error {
@@ -369,20 +369,22 @@ select {
   display: flex;
   flex-direction: row;
   align-items: start;
+  justify-content: center;
   flex-wrap: wrap;
   row-gap: 1.5rem;
   column-gap: 1.5rem;
 }
 
 .card {
-  min-height: 10rem;
+  flex-grow: 1;
+  flex-basis: 0;
   max-width: 18rem;
-  min-width: 12rem;
+  min-width: 14rem;
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: start;
+  /* justify-content: start; */
 
   margin-top: 2rem;
   margin-bottom: 2rem;
@@ -462,18 +464,22 @@ select {
 
 .ground {
   background-color: var(--ground);
+  color: var(--white);
 }
 
 .rock {
   background-color: var(--rock);
+  color: var(--white);
 }
 
 .fighting {
   background-color: var(--fighting);
+  color: var(--white);
 }
 
 .dark {
   background-color: var(--dark);
+  color: var(--white);
 }
 
 .steel {
@@ -481,7 +487,7 @@ select {
 }
 
 .psychic {
-  background-color: var(--pychic);
+  background-color: var(--psychic);
 }
 
 .poison {
@@ -510,6 +516,7 @@ select {
 
 .dragon {
   background-color: var(--dragon);
+  color: var(--white);
 }
 
 .bug {
@@ -521,6 +528,8 @@ select {
 /* INFORMATION PANEL */
 
 #info-panel {
+  position: sticky;
+  top: 6rem;
   height: fit-content;
   display: flex;
   flex-direction: column;
@@ -528,7 +537,7 @@ select {
   max-width: 24rem;
   min-width: 16rem;
 
-  position: relative;
+  /* position: relative; */
   margin-top: 5rem;
 
   background-color: var(--white);
