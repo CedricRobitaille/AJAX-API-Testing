@@ -7,6 +7,8 @@ let offset = 0;
 let limit = 18;
 let isLoading = false;
 
+let infoCardId  = null;
+
 
 /**
  * Reports an error to the user
@@ -31,46 +33,72 @@ const errorNotification = (error) => {
 }
 
 
+const clearInfoCard = () => {
+  const infoCard = document.getElementById("info-panel");
+  const main = document.querySelector("main");
+
+  main.removeChild(infoCard)
+  infoCardId = null;
+}
+
+const placeholderInfoCard = () => {
+
+}
+
 
 const pokemonInfoCard = async (data) => {
-  
+  // Generate a Placeholder Card
+    if (document.querySelector("#info-panel")) {
+      placeholderInfoCard()
+    }
+  // 
   data = await data;
   console.log(data)
 
-  const assembleInfoCard = () => {
-    const infoCard = document.createElement("section");
-    infoCard.id = "info-panel"
+  if (data.order != infoCardId) {
+    infoCardId = data.order;
 
-    const sprite = document.createElement("img");
-    sprite.setAttribute("src", data.sprites.front_default)
-    sprite.id = "sprite";
-    infoCard.appendChild(sprite);
+    
 
-    const id = document.createElement('p');
-    id.classList.add("id-number");
-    id.innerText = data.order;
-    infoCard.appendChild(id);
+    const assembleInfoCard = () => {
+      const infoCard = document.createElement("section");
+      infoCard.id = "info-panel"
 
-    const name = document.createElement("h2")
-    name.id = "pokemon-name";
-    name.innerText = data.name;
-    infoCard.appendChild(name);
+      const sprite = document.createElement("img");
+      sprite.setAttribute("src", data.sprites.front_default)
+      sprite.id = "sprite";
+      infoCard.appendChild(sprite);
+
+      const id = document.createElement('p');
+      id.classList.add("id-number");
+      id.innerText = data.order;
+      infoCard.appendChild(id);
+
+      const name = document.createElement("h2")
+      name.id = "pokemon-name";
+      name.innerText = data.name;
+      infoCard.appendChild(name);
 
 
 
-    return infoCard;
+      return infoCard;
+    }
+
+    const main = document.querySelector("main");
+    const infoPanel = assembleInfoCard()
+
+    const previousPanel = document.getElementById("info-panel");
+    
+    if (previousPanel) {
+      main.removeChild(previousPanel);
+    }
+
+    infoCardId = data.order;
+    main.appendChild(infoPanel)
+  } else { // Same pokemon in card as is clicked
+    clearInfoCard();
   }
 
-  const main = document.querySelector("main");
-  const infoPanel = assembleInfoCard()
-  
-
-  const previousPanel = document.getElementById("info-panel");
-  if (previousPanel) {
-    main.removeChild(previousPanel);
-  }
-
-  main.appendChild(infoPanel)
   isLoading = false;
 }
 
